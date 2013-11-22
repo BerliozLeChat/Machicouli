@@ -27,10 +27,11 @@ class DateMeteo {
 
 	public :
 		DateMeteo(void);
-		void initialiserDateMeteo(int,int,int);
-		bool equals(DateMeteo);
-		int comparerDateMeteo(DateMeteo);
-		void afficherDateMeteo()
+		bool initialiserDateMeteo(int,int,int);
+		int serializeDateMeteo();
+		bool equals(DateMeteo*);
+		int comparerDateMeteo(DateMeteo*);
+		void afficherDateMeteo();
 
 		
 		
@@ -43,47 +44,49 @@ DateMeteo::DateMeteo(){
 		this->heure=0;
 }
 
-void DateMeteo::initialiserDateMeteo(int annee,int jour,int heure){	
-		this->annee=annee;
-		this->jour=jour;
-		this->heure=heure;
-}
-
-bool DateMeteo::equals(DateMeteo date){
-	bool res = false;
-	if(this->annee == date->annee){
-		if(this->jour == date->jour){
-			if(this.heure == date.heure)
-				res=true;
-		}
+bool DateMeteo::initialiserDateMeteo(int annee,int jour,int heure){	
+	if(heure>23 || heure<0)
+		return false;
+	if((annee%4==0 && annee%100!=0)||annee%400==0){
+		if(jour>366)
+			return false;
 	}
+	else{
+		if(jour>365)
+			return false;
+	}
+	
+	this->annee=annee;
+	this->jour=jour;
+	this->heure=heure;
+	
+	return true;	
 }
 
-int DateMeteo::comparerDateMeteo(DateMeteo date){
-	int compare=0;
-	if(!this->equals(date)){
-		if(this->annee<date->annee){
-			compare=-1
-		}
-		else if(this->annee>date->annee){
-			compare=1;	
-		}
-		else{
-			if(this->jour<date->jour){
-				compare=-1
-			}
-			else if(this->jour>date->jour){
-				compare=1;	
-			}
-			else{
-				if(this->heure<date->heure){
-					compare=-1
-				}
-				else{
-					compare=1;	
-				}				
-			}
-		}
+int DateMeteo::serializeDateMeteo(){
+	return this->heure+this->jour*100+this->annee*100000;
+}
+
+
+bool DateMeteo::equals(DateMeteo *date){
+	bool res = false;
+	if(this->serializeDateMeteo()==date->serializeDateMeteo()){
+		res=true;
+	}
+	return res;
+}
+
+int DateMeteo::comparerDateMeteo(DateMeteo *date){
+	int compare;
+	
+	if(this->equals(date)){
+		compare=0;
+	}
+	else if(this->serializeDateMeteo()>date->serializeDateMeteo()){
+		compare=1;
+	}
+	else{
+		compare=-1;
 	}
 	return compare;
 }
