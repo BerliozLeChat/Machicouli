@@ -6,7 +6,7 @@ X3I0010   TP n◦ 3 : chainage et météo
 
 Auteurs : François Hallereau & Sébastien Vallée
 Groupe : 301B
-Date : 
+Date :
 */
 
 
@@ -23,19 +23,20 @@ class DateMeteo {
 	private:
 	int annee;
 	int jour;
-	int heure;	
+	int heure;
 
 	public :
 		DateMeteo(void);
+		~DateMeteo(void);
 		bool initialiserDateMeteo(int,int,int);
 		int serializeDateMeteo();
 		bool equals(DateMeteo*);
 		int comparerDateMeteo(DateMeteo*);
 		void afficherDateMeteo();
 
-		
-		
-	
+
+
+
 };
 
 DateMeteo::DateMeteo(){
@@ -44,7 +45,7 @@ DateMeteo::DateMeteo(){
 		this->heure=0;
 }
 
-bool DateMeteo::initialiserDateMeteo(int annee,int jour,int heure){	
+bool DateMeteo::initialiserDateMeteo(int annee,int jour,int heure){
 	if(heure>23 || heure<0)
 		return false;
 	if((annee%4==0 && annee%100!=0)||annee%400==0){
@@ -55,12 +56,12 @@ bool DateMeteo::initialiserDateMeteo(int annee,int jour,int heure){
 		if(jour>365)
 			return false;
 	}
-	
+
 	this->annee=annee;
 	this->jour=jour;
 	this->heure=heure;
-	
-	return true;	
+
+	return true;
 }
 
 int DateMeteo::serializeDateMeteo(){
@@ -78,7 +79,7 @@ bool DateMeteo::equals(DateMeteo *date){
 
 int DateMeteo::comparerDateMeteo(DateMeteo *date){
 	int compare;
-	
+
 	if(this->equals(date)){
 		compare=0;
 	}

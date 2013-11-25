@@ -6,7 +6,7 @@ X3I0010   TP n◦ 3 : chainage et météo
 
 Auteurs : François Hallereau & Sébastien Vallée
 Groupe : 301B
-Date : 
+Date :
 */
 
 
@@ -27,18 +27,19 @@ class ReleveMeteo {
         private:
           int station;
           DateMeteo date;
-          int temperature;
-          
+          double temperature;
+
         public:
-          void initialiserReleveMeteo();
-          void initialiserReleveMeteo(int,DateMeteo,int);
-          void initialiserReleveMeteo(int,int, int ,int ,int);
+          ~ReleveMeteo(void);
+          void ReleveMeteo();
+          void initialiserReleveMeteo(int,DateMeteo,double);
+          void initialiserReleveMeteo(int,int, int ,int ,double);
           int comparaisonReleveMeteo(fonctionComparaison);
           void afficherReleveMeteo();
-          
+
 }
 
-void ReleveMeteo::initialiserReleveMeteo(){
+void ReleveMeteo::ReleveMeteo(){
     this->station=0;
     this->DateMeteo= new DateMeteo().initialiserDateMeteo();
     this->temperature = -273,15;
