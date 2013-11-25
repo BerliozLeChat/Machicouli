@@ -91,3 +91,7 @@ int DateMeteo::comparerDateMeteo(DateMeteo *date){
 	return compare;
 }
 
+void DateMeteo::afficherDateMeteo(){
+	cout<<"[ annee : ".this->annee." ; jour : ".this->jour. " ; heure : ".this->heure." ]" <<endl;
+}
+
