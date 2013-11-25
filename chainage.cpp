@@ -7,6 +7,7 @@ class Maillon<class T>{
 
 class Chaine {
         private:
+		
           int nbElements;
           Maillon * tete;
 }
