@@ -19,8 +19,8 @@ Date :
 #include "DateMeteo.cpp"
 using namespace std; // afin d'éviter d'avoir à préfixer par "std::"
 
-typedef int (* CompReleveMeteo)
-        (const ReleveMeteo& rm1, const ReleveMeteo& rm2);
+//typedef int (* CompReleveMeteo)
+//        (const ReleveMeteo& rm1, const ReleveMeteo& rm2);
 
 
 class ReleveMeteo {
@@ -31,13 +31,15 @@ class ReleveMeteo {
 
         public:
           ~ReleveMeteo(void);
-          void ReleveMeteo();
+          ReleveMeteo();
           void initialiserReleveMeteo(int,DateMeteo,double);
           void initialiserReleveMeteo(int,int, int ,int ,double);
           int comparaisonReleveMeteo(fonctionComparaison);
           void afficherReleveMeteo();
 
 }
+
+int CompOrdreTotale
 
 void ReleveMeteo::ReleveMeteo(){
     this->station=0;
@@ -58,7 +60,7 @@ void ReleveMeteo::initialiserReleveMeteo(int station , int annee , int jour , in
 
 }
 
-int ReleveMeteo::comparaisonReleveMeteo(fonctionComparaison){
+int ReleveMeteo::comparaisonReleveMeteo(*CompReleveMeteo fonctionComparaison){
     return fonctionComparaison(this);
 }
 
