@@ -3,12 +3,12 @@ template <class T>Maillon{
            T element;
            Maillon<T> * suivant;
         public:
-            void Maillon(T,Maillon*);
+            void Maillon(T,Maillon<T>*);
             ~Maillon(void);
 
 }
 
-void Maillon<T>::Maillon(T element, Maillon * maillon){
+void Maillon<T>::Maillon(T element, Maillon<T> * maillon){
     this->element=element;
     this->suivant=maillon;
 }
@@ -21,17 +21,17 @@ template <class T> Chaine {
 
         public:
             ~Chaine(void);
-            void initialiserChainage() : //initialise un chaˆınage;
+            void initialiserChainage(); //initialise un chaˆınage;
             bool estVide() : //teste si un chaˆınage est vide, i.e., ne contenant aucun ´el´ement ;
-            void reinitialiser() : //r´einitialise un chaˆınage en retirant tous ses ´el´ements ;
-            void insererTete(...) : //ins`ere un ´el´ement en tˆete du chaˆınage;
-            void insererQueue(T) : //ins`ere un ´el´ement en queue du chaˆınage;
-            void retirerTete(...) : //retire l’´el´ement de tˆete d’un chaˆınage;
-            void retirerQueue(...) : //retire l’´el´ement de queue d’un chaˆınage;
-            void insererOrdre(...) : //ins`ere un ´el´ement dans un chaˆınage dans l’ordre donn´e par une fonction de comparaison de type CompReleveMeteo (pass´ee en param`etre);
-            Maillon plusPetitElement(...) : //retourne l’´el´ement le plus petit selon l’ordre donn´e par une fonction de comparaison de type CompReleveMeteo (pass´ee en param`etre);
-            ?? retirerTous(...) : //retire tous les ´el´ements d’un chaˆınage v´eriﬁant une propri´et´e donn´ee par un pr´edicat de type PredicatReleveMeteo (pass´e en param`etre);
-            void afficherChainage(...) : //ecrit les ´el´ements d’un chaˆınage sur un ﬂot de sortie.
+            void reinitialiser(); //r´einitialise un chaˆınage en retirant tous ses ´el´ements ;
+            void insererTete(T); //ins`ere un ´el´ement en tˆete du chaˆınage;
+            void insererQueue(T); //ins`ere un ´el´ement en queue du chaˆınage;
+            void retirerTete(); //retire l’´el´ement de tˆete d’un chaˆınage;
+            void retirerQueue(); //retire l’´el´ement de queue d’un chaˆınage;
+            void insererOrdre(); //ins`ere un ´el´ement dans un chaˆınage dans l’ordre donn´e par une fonction de comparaison de type CompReleveMeteo (pass´ee en param`etre);
+            Maillon plusPetitElement(); //retourne l’´el´ement le plus petit selon l’ordre donn´e par une fonction de comparaison de type CompReleveMeteo (pass´ee en param`etre);
+            void retirerTous(); //retire tous les ´el´ements d’un chaˆınage v´eriﬁant une propri´et´e donn´ee par un pr´edicat de type PredicatReleveMeteo (pass´e en param`etre);
+            void afficherChainage(); //ecrit les ´el´ements d’un chaˆınage sur un ﬂot de sortie.
 
 }
 
@@ -102,15 +102,15 @@ void retirerQueue(){
         this->nbElements=this->nbElements-1;
     }
 }
-void insererOrdre(...){
-
+void insererOrdre(){
+        ;
 }
-Maillon plusPetitElement(...){
-
+Maillon plusPetitElement(){
+        ;
 }
-?? retirerTous(...){
-
+void retirerTous(){
+        ;
 }
-void afficherChainage(...){
-
+void afficherChainage(){
+        ;
 }
