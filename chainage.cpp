@@ -1,8 +1,7 @@
-template <class T>Maillon{
-        private:
+template <typename T> class Maillon{
+        public:
            T element;
            Maillon<T> * suivant;
-        public:
             void Maillon(T,Maillon<T>*);
             ~Maillon(void);
 
@@ -13,7 +12,7 @@ void Maillon<T>::Maillon(T element, Maillon<T> * maillon){
     this->suivant=maillon;
 }
 
-template <class T> Chaine {
+template <typename T> class Chaine {
         private:
 
           int nbElements;
@@ -22,7 +21,7 @@ template <class T> Chaine {
         public:
             ~Chaine(void);
             void initialiserChainage(); //initialise un chaˆınage;
-            bool estVide() : //teste si un chaˆınage est vide, i.e., ne contenant aucun ´el´ement ;
+            bool estVide() ; //teste si un chaˆınage est vide, i.e., ne contenant aucun ´el´ement ;
             void reinitialiser(); //r´einitialise un chaˆınage en retirant tous ses ´el´ements ;
             void insererTete(T); //ins`ere un ´el´ement en tˆete du chaˆınage;
             void insererQueue(T); //ins`ere un ´el´ement en queue du chaˆınage;
