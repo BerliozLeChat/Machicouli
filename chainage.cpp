@@ -88,7 +88,7 @@ template <class T> class Chaine {
                     this->nbElements=this->nbElements-1;
                 }
             }
-            void insererOrdre(){
+            void insererOrdre(T element){
 
             }
             Maillon<T> plusPetitElement(){

@@ -1,7 +1,7 @@
 #include "DateMeteo.cpp"
 
-int main(){
-	DateMeteo *date = new DateMeteo();
+int main(int argc, char *argv[]){
+    DateMeteo *date = new DateMeteo();
 	date->initialiserDateMeteo(2001,01,22);
 
 	DateMeteo *date2 = new DateMeteo();

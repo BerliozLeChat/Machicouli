@@ -19,8 +19,9 @@ Date :
 #include "DateMeteo.cpp"
 using namespace std; // afin d'éviter d'avoir à préfixer par "std::"
 
-//typedef int (* CompReleveMeteo)
-//        (const ReleveMeteo& rm1, const ReleveMeteo& rm2);
+typedef int (* CompReleveMeteo)(const ReleveMeteo& rm1, const ReleveMeteo& rm2);
+
+typedef bool (*PredicatReleveMeteo)(const ReleveMeteo& rm);
 
 
 class ReleveMeteo {
@@ -38,8 +39,6 @@ class ReleveMeteo {
           void afficherReleveMeteo();
 
 }
-
-int CompOrdreTotale
 
 void ReleveMeteo::ReleveMeteo(){
     this->station=0;
@@ -61,9 +60,35 @@ void ReleveMeteo::initialiserReleveMeteo(int station , int annee , int jour , in
 }
 
 int ReleveMeteo::comparaisonReleveMeteo(*CompReleveMeteo fonctionComparaison){
-    return fonctionComparaison(this);
+    return fonctionComparaison(this,ReleveMeteo);
 }
 
 void ReleveMeteo::afficherReleveMeteo(){
     cout << "[ station : ".this.station." ]".this.date.afficherDateMeteo()." [ temperature : ".this->temperature." ]" <<endl;
 }
+
+int CompTempDateStation(const ReleveMeteo& rm1, const ReleveMeteo& rm2){
+    int retour=1;
+    if(rm1.temperature<rm2.temperature){
+        retour=-1;
+    }
+    else if(rm1.temperature==rm2.temperature){
+        if(rm1.date.comparerDateMeteo(rm2.date)==0){
+            if(rm1.station>rm2.station){
+                retour=-1
+            }
+           else if(rm1.station==rm2.station){
+                retour=0
+            }
+        }
+        else{
+            retour=rm1.date.comparerDateMeteo(rm2.date);
+        }
+    }
+}
+
+
+
+
+
+
