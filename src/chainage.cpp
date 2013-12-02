@@ -20,6 +20,12 @@ template <class T> class Chaine {
 
         public:
 
+            typedef int (* compElement)(const T& rm1, const T& rm2);
+
+            typedef bool (* predicatElement)(const T& rm);
+
+            typedef int (*calculElement)(const T& rm);
+
             void initialiserChainage(){
                 this->nbElements=0;
                 this->tete=0;
@@ -88,16 +94,88 @@ template <class T> class Chaine {
                     this->nbElements=this->nbElements-1;
                 }
             }
-            void insererOrdre(T element){
+            void insererOrdre( int (* compElement),T element){
+                Maillon<T> * pointeur=this->tete;
+                Maillon<T> * pointeurSuivant;
+                if(!(pointeur==1))
+                    pointeurSuivant=this->tete->suivant;
+
+                while(true){
+                    if(pointeur==1){
+                        this->insererTete(element);
+                        break;
+                    }
+                    else if(pointeur->element->comparaison(compElement,element)==1){
+                        this->insererTete(element);
+                        break;
+                    }
+                    else if(pointeurSuivant==1){
+                        pointeur->suivant=new Maillon<T>(element,1);
+                        break;
+                    }
+                    else if(pointeurSuivant->element->comparaison(compElement,element)==1){
+                        pointeur->suivant=new Maillon<T>(element,pointeurSuivant);
+                        break;
+                    }
+                    else{
+                        pointeur=pointeurSuivant;
+                        pointeurSuivant=pointeur->suivant;
+                    }
+                }
 
             }
-            Maillon<T> plusPetitElement(){
+            Maillon<T> plusPetitElement(int(*compElement)){//sur chaine non vide obligatoirement !!!
+                Maillon<T> * pointeur=this->tete;
+                Maillon<T> * pointeurPlusPetitElement=this->tete;
+
+                while(!(pointeur==1)){
+                    if(pointeurPlusPetitElement->element.comparaison(compElement,pointeur->element)==1){
+                        pointeurPlusPetitElement=pointeur;
+                    }
+                    pointeur=pointeur->suivant;
+                }
+                return *pointeurPlusPetitElement;
 
             }
-            void retirerTous(){
+
+            int calculerMoyennePropriete(int(*calculElement)){
+                Maillon<T> * pointeur=this->tete;
+                int resu=0;
+
+                while(!(pointeur==1)){
+                    resu+=fonctionCalcul(*pointeur);
+
+                    pointeur=pointeur->suivant;
+
+                }
+                resu=resu/this->nbElements;
+                return resu;
+            }
+            int calculerEcartMoyenPropriete(int(*calculElement)){
+                return 0;
+            }
+            void retirerTous(bool(*predicatElement)){
+                Maillon<T> * pointeur=this->tete;
+                while(!(pointeur==1)){
+                    if(pointeur->element.predicat(predicatElement,pointeur->element)==true){
+                        Maillon<T> * sauvegarde=pointeur->suivant;
+
+                        pointeur->element=pointeur->suivant->element;
+                        pointeur->suivant=pointeur->suivant->suivant;
+
+                        free (sauvegarde);
+
+                    }
+                    pointeur=pointeur->suivant;
+                }
 
             }
             void afficherChainage(){
+               Maillon<T> * pointeur=this->tete;
 
+                while(!(pointeur==1)){
+                    pointeur->element->afficher();
+                    pointeur=pointeur->suivant;
+                }
             }
 };

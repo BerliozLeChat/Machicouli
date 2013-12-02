@@ -19,6 +19,8 @@ Date :
 #include "DateMeteo.cpp"
 using namespace std; // afin d'éviter d'avoir à préfixer par "std::"
 
+class ReleveMeteo;
+
 typedef int (* CompReleveMeteo)(const ReleveMeteo& rm1, const ReleveMeteo& rm2);
 
 typedef bool (*PredicatReleveMeteo)(const ReleveMeteo& rm);
@@ -35,7 +37,7 @@ class ReleveMeteo {
           ReleveMeteo();
           void initialiserReleveMeteo(int,DateMeteo,double);
           void initialiserReleveMeteo(int,int, int ,int ,double);
-          int comparaisonReleveMeteo(fonctionComparaison);
+          int comparaisonReleveMeteo(int(* CompReleveMeteo));
           void afficherReleveMeteo();
 
 }
@@ -59,14 +61,21 @@ void ReleveMeteo::initialiserReleveMeteo(int station , int annee , int jour , in
 
 }
 
-int ReleveMeteo::comparaisonReleveMeteo(*CompReleveMeteo fonctionComparaison){
-    return fonctionComparaison(this,ReleveMeteo);
+int ReleveMeteo::comparaison(*CompReleveMeteo fonctionComparaison,ReleveMeteo releve2){
+    return fonctionComparaison(this,releve2);
 }
 
-void ReleveMeteo::afficherReleveMeteo(){
-    cout << "[ station : ".this.station." ]".this.date.afficherDateMeteo()." [ temperature : ".this->temperature." ]" <<endl;
+bool ReleveMeteo::predicat(*PredicatReleveMeteo *predicat()){
+    return predicat(this);
 }
 
+void ReleveMeteo::afficher(){
+    cout << "[ station : ".this.station." ]".this.date.toString()." [ temperature : ".this->temperature." ]" <<endl;
+}
+
+
+
+//fonctions pouvant etre appelé par la fonction de comparaison ou de predicat de la classe
 int CompTempDateStation(const ReleveMeteo& rm1, const ReleveMeteo& rm2){
     int retour=1;
     if(rm1.temperature<rm2.temperature){
@@ -85,6 +94,22 @@ int CompTempDateStation(const ReleveMeteo& rm1, const ReleveMeteo& rm2){
             retour=rm1.date.comparerDateMeteo(rm2.date);
         }
     }
+}
+
+int CompTempDateStationInverse(const ReleveMeteo& rm1, const ReleveMeteo& rm2){
+    int resultat=CompTempDateStation(rm1,rm2);
+    if(resultat==0)
+        return 0
+    else
+        return -resultat;
+}
+
+bool PredicatTemp(const ReleveMeteo& rm){
+    if(rm->temperature<=0)
+        return true;
+    else
+        return false;
+
 }
 
 
