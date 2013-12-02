@@ -9,9 +9,9 @@ Groupe : 301B
 Date :
 */
 
-
-
 #include <iostream> // pour les entrées/sorties
+#include <sstream>
+#include <stdio.h>
 #include <fstream>
 #include <cmath>
 #include <string>
@@ -94,10 +94,20 @@ int DateMeteo::comparerDateMeteo(DateMeteo *date){
 }
 
 string DateMeteo::toString(){
+    ostringstream convert;
 
-    return " [ annee : "<<str(this->annee)<<" jour : "<<str(this->jour)<<" ; heure : "<<str(this->heure)<<" ]";
+    convert << this->annee;
+    string buff = convert.str();
+
+    convert << this->jour;
+    string buff2 = convert.str();
+
+    convert << this->heure;
+    string buff3 = convert.str();
+
+    return " [ annee : "+buff+" jour : "+buff2+" ; heure : "+buff3+" ]";
 }
 void DateMeteo::afficherDateMeteo(){
-	cout<<"[ annee : "<<this->annee<<" ; jour : "<<this->jour<<" ; heure : "<<this->heure<<" ]" <<endl;
+	cout <<"[ annee : "<<this->annee<<" ; jour : "<<this->jour<<" ; heure : "<<this->heure<<" ]" <<endl;
 }
 

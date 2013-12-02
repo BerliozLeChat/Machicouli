@@ -1,5 +1,3 @@
-
-
 template <class T> class Maillon{
         public:
            T element;
