@@ -94,7 +94,8 @@ int DateMeteo::comparerDateMeteo(DateMeteo *date){
 }
 
 string DateMeteo::toString(){
-    return " [ annee : ".str(this->annee)." jour : ".str(this->jour)." ; heure : ".str(this->heure)." ]";
+
+    return " [ annee : "<<str(this->annee)<<" jour : "<<str(this->jour)<<" ; heure : "<<str(this->heure)<<" ]";
 }
 void DateMeteo::afficherDateMeteo(){
 	cout<<"[ annee : "<<this->annee<<" ; jour : "<<this->jour<<" ; heure : "<<this->heure<<" ]" <<endl;

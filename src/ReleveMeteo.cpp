@@ -70,7 +70,7 @@ bool ReleveMeteo::predicat(*PredicatReleveMeteo *predicat()){
 }
 
 void ReleveMeteo::afficher(){
-    cout << "[ station : ".this.station." ]".this.date.toString()." [ temperature : ".this->temperature." ]" <<endl;
+    cout << "[ station : ".this->station." ]".this->date.toString()." [ temperature : ".this->temperature." ]" <<endl;
 }
 
 
@@ -109,6 +109,27 @@ bool PredicatTemp(const ReleveMeteo& rm){
         return true;
     else
         return false;
+
+}
+
+
+//fonction pour lire les relevés dans un fichier texte
+
+ void lectureReleves(Chainage& chaine,char* monTableau){
+
+    int station, annee, jour, heure;
+    double temperature;
+    std::ifstream ifs ("..\res\releves\releve_s3_2007.txt", std::ifstream::in); // filename est le nom du ficher de releves
+    if (ifs) {
+        while (getline(ifs, ligne)) {
+            std::istringstream iss(ligne);
+            iss >> station;
+            iss >> annee;
+            iss >> jour;
+            iss >> heure;
+            iss >> temperature;// ici traitement du relev´e qui vient d’e^tre lu dans le fichier }
+
+            chaine.insererOrdre(&CompTempDateStation,new Maillon<ReleveMeteo>().initialiserReleveMeteo(station ,new DateMeteo().initialiserDateMeteo(annee,jour,heure),temperature));  // on l'affiche
 
 }
 
