@@ -28,21 +28,19 @@ typedef bool (*PredicatReleveMeteo)(const ReleveMeteo& rm);
 
 
 class ReleveMeteo {
-        private:
+         public:
           int station;
           DateMeteo * date;
           double temperature;
 
-        public:
-          ~ReleveMeteo(void);
           ReleveMeteo(void);
           void initialiserReleveMeteo(int,DateMeteo *,double);
           void initialiserReleveMeteo(int,int, int ,int ,double);
           int getStation();
           DateMeteo* getDate();
           double getTemperature();
-          int comparaison(int(* CompReleveMeteo),ReleveMeteo);
-          bool predicat(bool (*PredicatReleveMeteo));
+          int comparaison(CompReleveMeteo,ReleveMeteo);
+          bool predicat(PredicatReleveMeteo);
           void afficher();
 
 };
@@ -76,12 +74,12 @@ double ReleveMeteo::getTemperature(){
     return this->temperature;
 }
 
-int ReleveMeteo::comparaison(int(*CompReleveMeteo),ReleveMeteo releve2){
-    return CompReleveMeteo(this,releve2);
+int ReleveMeteo::comparaison(CompReleveMeteo mafunction,ReleveMeteo releve2){
+    return mafunction(*this,releve2);
 }
 
-bool ReleveMeteo::predicat(bool (*PredicatReleveMeteo)){
-    return PredicatReleveMeteo(this);
+bool ReleveMeteo::predicat(PredicatReleveMeteo predicat){
+    return predicat(*this);
 }
 
 void ReleveMeteo::afficher(){
@@ -99,22 +97,23 @@ void ReleveMeteo::afficher(){
 //fonctions pouvant etre appelé par la fonction de comparaison ou de predicat de la classe
 int CompTempDateStation(const ReleveMeteo& rm1, const ReleveMeteo& rm2){
     int retour=1;
-    if(rm1.getTemperature()<rm2.getTemperature()){
+    if(rm1.temperature<rm2.temperature){
         retour=-1;
     }
-    else if(rm1.getTemperature()==rm2.getTemperature()){
-        if(rm1.getDate().comparerDateMeteo(rm2.getDate())==0){
-            if(rm1.getStation()>rm2.getStation()){
+    else if(rm1.temperature==rm2.temperature){
+        if(rm1.date->comparerDateMeteo(rm2.date)==0){
+            if(rm1.station>rm2.station){
                 retour=-1;
             }
-           else if(rm1.getStation()==rm2.getStation()){
+           else if(rm1.station==rm2.station){
                 retour=0;
             }
         }
         else{
-            retour=rm1.getDate().comparerDateMeteo(*(rm2.getDate()));
+            retour=rm1.date->comparerDateMeteo(rm2.date);
         }
     }
+    return retour;
 }
 
 int CompTempDateStationInverse(const ReleveMeteo& rm1, const ReleveMeteo& rm2){
@@ -126,7 +125,7 @@ int CompTempDateStationInverse(const ReleveMeteo& rm1, const ReleveMeteo& rm2){
 }
 
 bool PredicatTemp(const ReleveMeteo& rm){
-    if(rm.getTemperature()<=0)
+    if(rm.temperature<=0)
         return true;
     else
         return false;
@@ -136,10 +135,11 @@ bool PredicatTemp(const ReleveMeteo& rm){
 
 //fonction pour lire les relevés dans un fichier texte
 
- void lectureReleves(Chainage& chaine,char* monTableau){
+void lectureReleves(Chaine<ReleveMeteo> & chaine,char* monTableau){
 
     int station, annee, jour, heure;
     double temperature;
+    string ligne="";
     std::ifstream ifs ("..\res\releves\releve_s3_2007.txt", std::ifstream::in); // filename est le nom du ficher de releves
     if (ifs) {
         while (getline(ifs, ligne)) {
@@ -150,8 +150,18 @@ bool PredicatTemp(const ReleveMeteo& rm){
             iss >> heure;
             iss >> temperature;// ici traitement du relev´e qui vient d’e^tre lu dans le fichier }
 
-            chaine.insererOrdre(&CompTempDateStation,new Maillon<ReleveMeteo>().initialiserReleveMeteo(station ,new DateMeteo().initialiserDateMeteo(annee,jour,heure),temperature));  // on l'affiche
+            DateMeteo * date = new DateMeteo();
+            date->initialiserDateMeteo(annee,jour,heure);
 
+            ReleveMeteo * releve = new ReleveMeteo();
+            releve->initialiserReleveMeteo(station ,date,temperature);
+
+            //Maillon<ReleveMeteo> maillon = new Maillon<ReleveMeteo>(releve,0);
+
+            chaine.insererOrdre(CompTempDateStation,*releve);  // on l'affiche
+
+}
+}
 }
 
 

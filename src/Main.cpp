@@ -1,8 +1,6 @@
-#include "DateMeteo.cpp"
-#include "chainage.cpp"
 #include "ReleveMeteo.cpp"
 
-/*int main(int argc, char *argv[]){
+int main(int argc, char *argv[]){
     DateMeteo *date = new DateMeteo();
 	date->initialiserDateMeteo(2001,01,22);
 
@@ -30,4 +28,4 @@
 
 	cout<<date->serializeDateMeteo()<<endl;
 	cout<<date->comparerDateMeteo(date2)<<endl<<date->comparerDateMeteo(date3)<<endl<<date->comparerDateMeteo(date4);
-}*/
+}

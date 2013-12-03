@@ -14,7 +14,7 @@ template <class T> class Chaine {
         private:
 
           int nbElements;
-          Maillon<T> &tete;
+          Maillon<T> * tete;
 
         public:
 
@@ -23,10 +23,13 @@ template <class T> class Chaine {
             typedef bool (* predicatElement)(const T& rm);
 
             typedef int (*calculElement)(const T& rm);
-
+            Chaine(){
+                this->tete=NULL;
+                this->nbElements=0;
+            }
             void initialiserChainage(){
                 this->nbElements=0;
-                this->tete=0;
+                this->tete=NULL;
             }
             bool estVide(){
                 if(this->nbElements)
@@ -39,7 +42,7 @@ template <class T> class Chaine {
                     Maillon<T> * suivant;
                     Maillon<T> * ptr = this->tete;
 
-                    while(!(this->ptr==0)){
+                    while(!(this->ptr==NULL)){
                         suivant=this->ptr->suivant;
                         free(this->ptr);
                         ptr=suivant;
@@ -55,14 +58,14 @@ template <class T> class Chaine {
 
             }
             void insererQueue(T element){
-                Maillon<T> mama=new Maillon<T>(element,0);
+                Maillon<T> mama=new Maillon<T>(element,NULL);
 
-                if(this->tete==0){
+                if(this->tete==NULL){
                     this->tete=&mama;
                 }
                 else{
                     Maillon<T>* p = this->tete;
-                    while(!(p->suivant==0)){
+                    while(!(p->suivant==NULL)){
                         p=p->suivant;
                     }
 
@@ -82,36 +85,36 @@ template <class T> class Chaine {
 
             }
             void retirerQueue(){
-                if(!(this->tete==0) && !(this->tete->suivant==0)){
+                if(!(this->tete==0) && !(this->tete->suivant==NULL)){
                     Maillon<T> *p = this->tete;
-                    while(!(p->suivant->suivant==0)){
+                    while(!(p->suivant->suivant==NULL)){
                         p=p->suivant;
                     }
                     free(p->suivant);
-                    p->suivant=0;
+                    p->suivant=NULL;
                     this->nbElements=this->nbElements-1;
                 }
             }
-            void insererOrdre( int (* compElement),T element){
+            void insererOrdre(compElement compElem,T element){
                 Maillon<T> * pointeur=this->tete;
                 Maillon<T> * pointeurSuivant;
-                if(!(pointeur==1))
+                if(!(pointeur==NULL))
                     pointeurSuivant=this->tete->suivant;
 
                 while(true){
-                    if(pointeur==1){
+                    if(pointeur==NULL){
                         this->insererTete(element);
                         break;
                     }
-                    else if(pointeur->element->comparaison(compElement,element)==1){
+                    else if(pointeur->element.comparaison(*compElem,element)==1){
                         this->insererTete(element);
                         break;
                     }
-                    else if(pointeurSuivant==1){
-                        pointeur->suivant=new Maillon<T>(element,1);
+                    else if(pointeurSuivant==NULL){
+                        pointeur->suivant=new Maillon<T>(element,NULL);
                         break;
                     }
-                    else if(pointeurSuivant->element->comparaison(compElement,element)==1){
+                    else if(pointeurSuivant->element.comparaison(*compElem,element)==1){
                         pointeur->suivant=new Maillon<T>(element,pointeurSuivant);
                         break;
                     }
@@ -126,7 +129,7 @@ template <class T> class Chaine {
                 Maillon<T> * pointeur=this->tete;
                 Maillon<T> * pointeurPlusPetitElement=this->tete;
 
-                while(!(pointeur==1)){
+                while(!(pointeur==NULL)){
                     if(pointeurPlusPetitElement->element.comparaison(compElement,pointeur->element)==1){
                         pointeurPlusPetitElement=pointeur;
                     }
@@ -140,7 +143,7 @@ template <class T> class Chaine {
                 Maillon<T> * pointeur=this->tete;
                 int resu=0;
 
-                while(!(pointeur==1)){
+                while(!(pointeur==NULL)){
                     resu+=fonctionCalcul(*pointeur);
 
                     pointeur=pointeur->suivant;
